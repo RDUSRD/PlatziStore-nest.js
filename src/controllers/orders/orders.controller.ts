@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { createOrderDto, updateOrderDto } from 'src/dtos/orders/orders.dto';
 import { OrdersService } from 'src/services/orders/orders.service';
@@ -17,18 +18,26 @@ export class OrdersController {
     return new OrdersService().findAll();
   }
 
+  @Get(':id')
+  get(@Param('id', ParseIntPipe) id: number) {
+    return new OrdersService().findOne(id);
+  }
+
   @Post()
   create(@Body() payload: createOrderDto) {
     return new OrdersService().create(payload);
   }
 
   @Put('update/:id')
-  update(@Param('id') id: number, @Body() payload: updateOrderDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: updateOrderDto,
+  ) {
     return new OrdersService().update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return new OrdersService().delete(id);
   }
 }

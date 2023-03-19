@@ -10,7 +10,10 @@ import {
 } from '@nestjs/common';
 
 import { ProductsService } from '../../services/products/products.service';
-import { createProductDto } from '../../dtos/products/product.dto';
+import {
+  createProductDto,
+  updateProductDto,
+} from '../../dtos/products/product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -39,7 +42,10 @@ export class ProductsController {
   }
 
   @Put('update/:id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: updateProductDto,
+  ) {
     // return {
     //   message: 'Update',
     //   id,

@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import {
@@ -20,18 +21,26 @@ export class CustomersController {
     return new CustomersService().findAll();
   }
 
+  @Get(':id')
+  get(@Param('id', ParseIntPipe) id: number) {
+    return new CustomersService().findOne(id);
+  }
+
   @Post()
-  create(@Body() payload: any) {
+  create(@Body() payload: createCustomerDto) {
     return new CustomersService().create(payload);
   }
 
   @Put('update/:id')
-  update(@Param('id') id: number, @Body() payload: any) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: updateCustomerDto,
+  ) {
     return new CustomersService().update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return new CustomersService().delete(id);
   }
 }
