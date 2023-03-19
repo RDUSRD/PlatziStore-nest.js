@@ -7,38 +7,31 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import {
+  createCategoriesDto,
+  updateCategoriesDto,
+} from './../../dtos/categories/categories.dto';
+import { CategoriesService } from './../../services/categories/categories.service';
 
 @Controller('categories')
 export class CategoriesController {
   @Get()
   home() {
-    return {
-      message: 'Categories',
-    };
+    return new CategoriesService().findAll();
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'Create',
-      payload,
-    };
+  create(@Body() payload: createCategoriesDto) {
+    return new CategoriesService().create(payload);
   }
 
   @Put('update/:id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      message: 'Update',
-      id,
-      payload,
-    };
+  update(@Param('id') id: number, @Body() payload: updateCategoriesDto) {
+    return new CategoriesService().update(id, payload);
   }
 
   @Delete(':id')
   delete(@Param('id') id: number) {
-    return {
-      message: 'Delete',
-      id,
-    };
+    return new CategoriesService().delete(id);
   }
 }

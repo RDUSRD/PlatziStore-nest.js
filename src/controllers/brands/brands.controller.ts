@@ -9,39 +9,29 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { createBrandDto } from 'src/dtos/brands/brands.dto';
+import { BrandsService } from 'src/services/brands/brands.service';
 
 @Controller('brands')
 export class BrandsController {
   @Get()
   @HttpCode(HttpStatus.ACCEPTED)
   home() {
-    return {
-      message: 'Brands',
-    };
+    return new BrandsService().findAll();
   }
 
   @Post()
-  create(@Body() payload: any) {
-    return {
-      message: 'Create',
-      payload,
-    };
+  create(@Body() payload: createBrandDto) {
+    return new BrandsService().create(payload);
   }
 
   @Put('Update/:id')
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      message: 'Update',
-      id,
-      payload,
-    };
+  update(@Param('id') id: number, @Body() payload: createBrandDto) {
+    return new BrandsService().update(id, payload);
   }
 
   @Delete(':id')
   delete(@Param('id') id: number) {
-    return {
-      message: 'Delete',
-      id,
-    };
+    return new BrandsService().delete(id);
   }
 }
