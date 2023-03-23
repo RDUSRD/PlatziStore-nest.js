@@ -1,36 +1,27 @@
 import { Module } from '@nestjs/common';
-import { ProductsController } from './controllers/products/products.controller';
-import { CategoriesController } from './controllers/categories/categories.controller';
-import { UsersController } from './controllers/users/users.controller';
-import { CustomersController } from './controllers/customers/customers.controller';
-import { BrandsController } from './controllers/brands/brands.controller';
-import { OrdersController } from './controllers/orders/orders.controller';
-import { HomeController } from './controllers/home.controller';
-import { ProductsService } from './services/products/products.service';
-import { BrandsService } from './services/brands/brands.service';
-import { CategoriesService } from './services/categories/categories.service';
-import { CustomersService } from './services/customers/customers.service';
-import { OrdersService } from './services/orders/orders.service';
-import { UsersService } from './services/users/users.service';
+import { ProductsController } from './products/products.controller';
+import { UsersController } from './users/users.controller';
+import { HomeController } from './home.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { userModule } from './users/users.module';
+import { productModule } from './products/products.module';
 
 @Module({
-  imports: [],
-  controllers: [
-    ProductsController,
-    CategoriesController,
-    UsersController,
-    CustomersController,
-    BrandsController,
-    OrdersController,
-    HomeController,
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'nestdb',
+      entities: [__dirname + '/**/*.entities{.ts,.js}'],
+      synchronize: true,
+    }),
+    userModule,
+    productModule,
   ],
-  providers: [
-    ProductsService,
-    BrandsService,
-    CategoriesService,
-    CustomersService,
-    OrdersService,
-    UsersService,
-  ],
+  controllers: [ProductsController, UsersController, HomeController],
+  providers: [],
 })
 export class AppModule {}
