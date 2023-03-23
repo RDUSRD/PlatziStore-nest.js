@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ProductsController } from './products/products.controller';
-import { UsersController } from './users/users.controller';
 import { HomeController } from './home.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { userModule } from './users/users.module';
@@ -21,7 +19,7 @@ import { productModule } from './products/products.module';
     userModule,
     productModule,
   ],
-  controllers: [ProductsController, UsersController, HomeController],
+  controllers: [HomeController],
   providers: [],
 })
 export class AppModule {}

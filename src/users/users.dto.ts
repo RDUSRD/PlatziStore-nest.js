@@ -21,10 +21,6 @@ export class createUserDto {
   @IsDate()
   @IsNotEmpty()
   readonly created_at: Date;
-
-  @IsDate()
-  @IsNotEmpty()
-  readonly updated_at: Date;
 }
 
 export class updateUserDto extends PartialType(createUserDto) {}
